@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF转换器 - LibreOffice UNO API</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+        }
+        .file-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .file-link:hover {
+            background-color: #218838;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+        }
+        .tab.active {
+            background-color: white;
+            border-bottom: none;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 PDF转换器</h1>
+        <p style="text-align: center; color: #666;">使用LibreOffice UNO API进行文档格式转换</p>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('url')">URL转换</div>
+            <div class="tab" onclick="switchTab('upload')">文件上传</div>
+        </div>
+        
+        <!-- URL转换标签页 -->
+        <div id="url-tab" class="tab-content active">
+            <form id="urlForm">
+                <div class="form-group">
+                    <label for="url">文件URL:</label>
+                    <input type="text" id="url" name="url" placeholder="请输入文件的完整URL地址" required>
+                </div>
+                <div class="form-group">
+                    <label for="urlFormat">目标格式:</label>
+                    <select id="urlFormat" name="targetFormat" required>
+                        <option value="">请选择目标格式</option>
+                        <option value="pdf">PDF</option>
+                        <option value="doc">DOC</option>
+                        <option value="docx">DOCX</option>
+                        <option value="odt">ODT</option>
+                        <option value="rtf">RTF</option>
+                        <option value="txt">TXT</option>
+                        <option value="html">HTML</option>
+                        <option value="xls">XLS</option>
+                        <option value="xlsx">XLSX</option>
+                        <option value="ods">ODS</option>
+                        <option value="ppt">PPT</option>
+                        <option value="pptx">PPTX</option>
+                        <option value="odp">ODP</option>
+                    </select>
+                </div>
+                <button type="submit">开始转换</button>
+            </form>
+        </div>
+        
+        <!-- 文件上传标签页 -->
+        <div id="upload-tab" class="tab-content">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">选择文件:</label>
+                    <input type="file" id="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label for="uploadFormat">目标格式:</label>
+                    <select id="uploadFormat" name="targetFormat" required>
+                        <option value="">请选择目标格式</option>
+                        <option value="pdf">PDF</option>
+                        <option value="doc">DOC</option>
+                        <option value="docx">DOCX</option>
+                        <option value="odt">ODT</option>
+                        <option value="rtf">RTF</option>
+                        <option value="txt">TXT</option>
+                        <option value="html">HTML</option>
+                        <option value="xls">XLS</option>
+                        <option value="xlsx">XLSX</option>
+                        <option value="ods">ODS</option>
+                        <option value="ppt">PPT</option>
+                        <option value="pptx">PPTX</option>
+                        <option value="odp">ODP</option>
+                    </select>
+                </div>
+                <button type="submit">开始转换</button>
+            </form>
+        </div>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // 隐藏所有标签页内容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 移除所有标签的active类
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 显示选中的标签页内容
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // 激活选中的标签
+            event.target.classList.add('active');
+        }
+        
+        function showResult(message, isSuccess, downloadUrl = null) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result ' + (isSuccess ? 'success' : 'error');
+            resultDiv.style.display = 'block';
+            
+            let content = message;
+            if (isSuccess && downloadUrl) {
+                content += '<br><a href="' + downloadUrl + '" class="file-link" target="_blank">下载转换后的文件</a>';
+            }
+            
+            resultDiv.innerHTML = content;
+        }
+        
+        function showLoading() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result loading';
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '正在转换中，请稍候...';
+        }
+        
+        // URL转换表单处理
+        document.getElementById('urlForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const url = document.getElementById('url').value;
+            const targetFormat = document.getElementById('urlFormat').value;
+            
+            if (!url || !targetFormat) {
+                showResult('请填写完整的转换信息', false);
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const response = await fetch('/api/conversion/convert-url', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        url: url,
+                        targetFormat: targetFormat
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(
+                        `转换成功！<br>
+                        原始格式: ${result.originalFormat}<br>
+                        目标格式: ${result.convertedFormat}<br>
+                        文件大小: ${(result.fileSize / 1024).toFixed(2)} KB`,
+                        true,
+                        result.convertedUrl
+                    );
+                } else {
+                    showResult('转换失败: ' + result.message, false);
+                }
+            } catch (error) {
+                showResult('请求失败: ' + error.message, false);
+            }
+        });
+        
+        // 文件上传表单处理
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const file = document.getElementById('file').files[0];
+            const targetFormat = document.getElementById('uploadFormat').value;
+            
+            if (!file || !targetFormat) {
+                showResult('请选择文件并指定目标格式', false);
+                return;
+            }
+            
+            showLoading();
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('targetFormat', targetFormat);
+            
+            try {
+                const response = await fetch('/api/conversion/convert-upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(
+                        `转换成功！<br>
+                        原始格式: ${result.originalFormat}<br>
+                        目标格式: ${result.convertedFormat}<br>
+                        文件大小: ${(result.fileSize / 1024).toFixed(2)} KB`,
+                        true,
+                        result.convertedUrl
+                    );
+                } else {
+                    showResult('转换失败: ' + result.message, false);
+                }
+            } catch (error) {
+                showResult('请求失败: ' + error.message, false);
+            }
+        });
+    </script>
+</body>
+</html>

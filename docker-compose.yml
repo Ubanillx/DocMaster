@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # LibreOffice 服务 - 用于开发环境
+  libreoffice:
+    build:
+      context: .
+      dockerfile: Dockerfile.libreoffice
+    container_name: pdf-converter-libreoffice
+    environment:
+      - LIBREOFFICE_PATH=/usr/bin/libreoffice
+      - LIBREOFFICE_INSTALLATION_PATH=/usr/lib/libreoffice
+      - LIBREOFFICE_PROGRAM_PATH=/usr/lib/libreoffice/program
+      - LIBREOFFICE_URE_PATH=/usr/lib/libreoffice/ure/lib
+    volumes:
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # 用于 GUI 支持（如果需要）
+    network_mode: host  # 使用主机网络，方便本地应用连接
+    restart: unless-stopped
