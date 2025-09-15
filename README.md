@@ -37,17 +37,45 @@ git clone <your-repo-url>
 cd PdfConverter
 ```
 
-### 2. 启动Docker LibreOffice服务
+### 2. 设置环境变量
+在启动应用之前，需要设置环境变量来启用Docker LibreOffice模式：
+
 ```bash
-# 启动LibreOffice Docker容器
-docker-compose -f docker-compose.libreoffice.yml up -d
+# 设置环境变量启用Docker LibreOffice
+export USE_DOCKER_LIBREOFFICE=true
+```
+
+### 3. 启动Docker LibreOffice服务
+使用提供的启动脚本自动启动LibreOffice Docker容器：
+
+```bash
+# 使用启动脚本启动Docker LibreOffice服务
+./docker-start.sh
+```
+
+或者手动启动：
+```bash
+# 手动启动LibreOffice Docker容器
+docker-compose up -d
 
 # 验证容器运行状态
 docker ps
 ```
 
-### 3. 编译并运行应用
+### 4. 启动应用
+有两种方式启动应用：
+
+#### 方式一：使用启动脚本（推荐）
 ```bash
+# 使用启动脚本自动设置环境变量并启动应用
+./start-app.sh
+```
+
+#### 方式二：手动启动
+```bash
+# 确保已设置环境变量
+export USE_DOCKER_LIBREOFFICE=true
+
 # 编译项目
 mvn clean compile
 
@@ -55,28 +83,163 @@ mvn clean compile
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-### 4. 访问Web界面
+### 5. 访问Web界面
 打开浏览器访问: http://localhost:8080
+
+## 环境变量配置
+
+### 必需的环境变量
+应用需要以下环境变量来正确运行：
+
+| 环境变量 | 说明 | 默认值 | 必需 |
+|---------|------|--------|------|
+| `USE_DOCKER_LIBREOFFICE` | 启用Docker LibreOffice模式 | `false` | 是 |
+
+### 设置环境变量
+```bash
+# 启用Docker LibreOffice模式
+export USE_DOCKER_LIBREOFFICE=true
+
+# 验证环境变量设置
+echo $USE_DOCKER_LIBREOFFICE
+```
+
+### 永久设置环境变量
+将环境变量添加到您的shell配置文件中：
+
+```bash
+# 添加到 ~/.bashrc 或 ~/.zshrc
+echo 'export USE_DOCKER_LIBREOFFICE=true' >> ~/.bashrc
+source ~/.bashrc
+```
+
+## 启动脚本说明
+
+项目提供了两个便捷的启动脚本来简化部署过程：
+
+### 1. docker-start.sh - Docker LibreOffice启动脚本
+这个脚本用于启动LibreOffice Docker容器：
+
+**功能：**
+- 自动创建必要的目录（uploads、outputs）
+- 构建并启动LibreOffice Docker容器
+- 检查容器运行状态
+- 提供使用说明
+
+**使用方法：**
+```bash
+# 给脚本执行权限
+chmod +x docker-start.sh
+
+# 运行脚本
+./docker-start.sh
+```
+
+**脚本输出示例：**
+```
+🚀 启动 PDF Converter 开发环境...
+📦 构建 LibreOffice Docker 镜像...
+🏃 启动 LibreOffice 容器...
+⏳ 等待容器启动...
+🔍 检查容器状态...
+✅ LibreOffice Docker 容器已启动！
+
+📋 使用说明：
+1. 设置环境变量启用 Docker 模式：
+   export USE_DOCKER_LIBREOFFICE=true
+
+2. 启动您的 Spring Boot 应用：
+   mvn spring-boot:run -Dspring-boot.run.profiles=dev
+
+3. 或者直接运行应用启动脚本：
+   ./start-app.sh
+```
+
+### 2. start-app.sh - 应用启动脚本
+这个脚本用于启动Spring Boot应用：
+
+**功能：**
+- 自动设置必需的环境变量
+- 检查Docker容器是否运行
+- 启动Spring Boot应用
+
+**使用方法：**
+```bash
+# 给脚本执行权限
+chmod +x start-app.sh
+
+# 运行脚本
+./start-app.sh
+```
+
+**脚本输出示例：**
+```
+🚀 启动 PDF Converter 应用...
+✅ 已设置环境变量: USE_DOCKER_LIBREOFFICE=true
+✅ LibreOffice Docker 容器正在运行
+🏃 启动 Spring Boot 应用...
+```
+
+### 脚本权限设置
+首次使用前，需要给脚本添加执行权限：
+
+```bash
+# 设置脚本执行权限
+chmod +x docker-start.sh
+chmod +x start-app.sh
+
+# 验证权限
+ls -la *.sh
+```
 
 ## 部署方式
 
 ### 开发环境
 使用开发配置文件，连接Docker中的LibreOffice：
-```bash
-# 启动LibreOffice容器
-docker-compose -f docker-compose.libreoffice.yml up -d
 
-# 运行应用
+#### 使用启动脚本（推荐）
+```bash
+# 1. 启动LibreOffice Docker容器
+./docker-start.sh
+
+# 2. 启动应用（自动设置环境变量）
+./start-app.sh
+```
+
+#### 手动部署
+```bash
+# 1. 设置环境变量
+export USE_DOCKER_LIBREOFFICE=true
+
+# 2. 启动LibreOffice容器
+docker-compose up -d
+
+# 3. 运行应用
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 ### 生产环境
 使用生产配置文件，连接Docker中的LibreOffice：
-```bash
-# 启动LibreOffice容器
-docker-compose -f docker-compose.libreoffice.yml up -d
 
-# 运行应用
+#### 使用启动脚本（推荐）
+```bash
+# 1. 启动LibreOffice Docker容器
+./docker-start.sh
+
+# 2. 设置环境变量并启动应用
+export USE_DOCKER_LIBREOFFICE=true
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
+```
+
+#### 手动部署
+```bash
+# 1. 设置环境变量
+export USE_DOCKER_LIBREOFFICE=true
+
+# 2. 启动LibreOffice容器
+docker-compose up -d
+
+# 3. 运行应用
 mvn spring-boot:run -Dspring-boot.run.profiles=prod
 ```
 
@@ -482,7 +645,34 @@ curl -X POST http://localhost:8080/api/conversion/convert-upload \
 
 ## 故障排除
 
-### 1. Docker容器问题
+### 1. 环境变量问题
+```bash
+# 检查环境变量是否设置
+echo $USE_DOCKER_LIBREOFFICE
+
+# 如果未设置，重新设置
+export USE_DOCKER_LIBREOFFICE=true
+
+# 永久设置环境变量
+echo 'export USE_DOCKER_LIBREOFFICE=true' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 2. 启动脚本问题
+```bash
+# 检查脚本权限
+ls -la *.sh
+
+# 如果没有执行权限，添加权限
+chmod +x docker-start.sh
+chmod +x start-app.sh
+
+# 检查脚本内容
+cat docker-start.sh
+cat start-app.sh
+```
+
+### 3. Docker容器问题
 ```bash
 # 检查容器是否运行
 docker ps | grep pdf-converter-libreoffice
@@ -491,29 +681,65 @@ docker ps | grep pdf-converter-libreoffice
 docker logs pdf-converter-libreoffice
 
 # 重启容器
-docker-compose -f docker-compose.libreoffice.yml restart
+docker-compose restart
+
+# 完全重新启动
+docker-compose down
+docker-compose up -d
 ```
 
-### 2. 文件转换失败
+### 4. 文件转换失败
 - 检查源文件是否损坏
 - 确认目标格式是否支持
 - 查看应用日志获取详细错误信息
 - 确保Docker容器中的LibreOffice正常运行
+- 验证环境变量 `USE_DOCKER_LIBREOFFICE=true` 已设置
 
-### 3. 文件路径问题
+### 5. 文件路径问题
 - 确保 `uploads` 和 `outputs` 目录存在
 - 检查Docker卷挂载是否正确
 - 验证文件权限设置
+- 使用启动脚本自动创建目录
 
-### 4. 内存不足
+### 6. 内存不足
 - 增加JVM堆内存: `-Xmx2g`
 - 处理大文件时可能需要更多内存
 - 确保Docker容器有足够的内存分配
 
-### 5. 网络连接问题
+### 7. 网络连接问题
 - 确保Docker容器可以访问外部网络（用于URL下载）
 - 检查防火墙设置
 - 验证端口映射配置
+
+### 8. 常见错误及解决方案
+
+#### 错误：容器未运行
+```
+⚠️  LibreOffice Docker 容器未运行，请先运行: ./docker-start.sh
+```
+**解决方案：**
+```bash
+./docker-start.sh
+```
+
+#### 错误：环境变量未设置
+```
+Environment variable USE_DOCKER_LIBREOFFICE is not set
+```
+**解决方案：**
+```bash
+export USE_DOCKER_LIBREOFFICE=true
+```
+
+#### 错误：脚本权限不足
+```
+Permission denied: ./docker-start.sh
+```
+**解决方案：**
+```bash
+chmod +x docker-start.sh
+chmod +x start-app.sh
+```
 
 ## 开发说明
 
@@ -538,9 +764,10 @@ src/main/resources/
 └── application-prod.properties         # 生产环境配置
 
 # Docker配置文件
-├── docker-compose.libreoffice.yml      # LibreOffice Docker服务
+├── docker-compose.yml                  # Docker Compose配置
 ├── Dockerfile.libreoffice              # LibreOffice Docker镜像
-└── start-dev.sh                        # 开发环境启动脚本
+├── docker-start.sh                     # Docker LibreOffice启动脚本
+└── start-app.sh                        # 应用启动脚本
 ```
 
 ### 技术架构
