@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile.libreoffice
     container_name: pdf-converter-libreoffice
     environment:
+      - PUID=1000
+      - PGID=1000
       - LIBREOFFICE_PATH=/usr/bin/libreoffice
       - LIBREOFFICE_INSTALLATION_PATH=/usr/lib/libreoffice
       - LIBREOFFICE_PROGRAM_PATH=/usr/lib/libreoffice/program
