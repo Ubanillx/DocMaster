@@ -5,11 +5,19 @@
 
 echo "🚀 启动 PDF Converter 开发环境..."
 
+# 设置国内镜像源环境变量
+export DOCKER_REGISTRY_MIRROR="https://registry.cn-hangzhou.aliyuncs.com"
+export MAVEN_OPTS="-Dmaven.repo.remote=https://maven.aliyun.com/repository/public"
+
+echo "✅ 已设置国内镜像源环境变量:"
+echo "   - DOCKER_REGISTRY_MIRROR=${DOCKER_REGISTRY_MIRROR}"
+echo "   - MAVEN_OPTS=${MAVEN_OPTS}"
+
 # 创建必要的目录
 mkdir -p uploads outputs
 
 # 构建并启动 LibreOffice Docker 容器
-echo "📦 构建 LibreOffice Docker 镜像..."
+echo "📦 构建 LibreOffice Docker 镜像（使用国内镜像源）..."
 docker-compose build libreoffice
 
 echo "🏃 启动 LibreOffice 容器..."

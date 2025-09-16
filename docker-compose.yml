@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # LibreOffice 服务 - 用于开发环境
+  # LibreOffice 服务 - 用于生产环境
   libreoffice:
     build:
       context: .

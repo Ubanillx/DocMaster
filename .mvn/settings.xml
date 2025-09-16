@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 
+          http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <!-- 国内镜像源配置 -->
+  <mirrors>
+    <!-- 阿里云Maven镜像 -->
+    <mirror>
+      <id>aliyun-maven</id>
+      <mirrorOf>central</mirrorOf>
+      <name>阿里云Maven镜像</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
+    
+    <!-- 阿里云Spring镜像 -->
+    <mirror>
+      <id>aliyun-spring</id>
+      <mirrorOf>spring-releases</mirrorOf>
+      <name>阿里云Spring镜像</name>
+      <url>https://maven.aliyun.com/repository/spring</url>
+    </mirror>
+    
+    <!-- 阿里云Google镜像 -->
+    <mirror>
+      <id>aliyun-google</id>
+      <mirrorOf>google</mirrorOf>
+      <name>阿里云Google镜像</name>
+      <url>https://maven.aliyun.com/repository/google</url>
+    </mirror>
+  </mirrors>
+
+  <!-- 本地仓库路径 -->
+  <localRepository>${user.home}/.m2/repository</localRepository>
+
+  <!-- 离线模式 -->
+  <offline>false</offline>
+
+  <!-- 插件组 -->
+  <pluginGroups>
+    <pluginGroup>org.springframework.boot</pluginGroup>
+  </pluginGroups>
+
+  <!-- 代理配置（如果需要） -->
+  <proxies>
+    <!-- 代理配置示例
+    <proxy>
+      <id>example-proxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.example.com</host>
+      <port>8080</port>
+      <username>proxyuser</username>
+      <password>proxypass</password>
+      <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
+    </proxy>
+    -->
+  </proxies>
+
+  <!-- 服务器认证配置 -->
+  <servers>
+    <!-- 服务器认证配置示例
+    <server>
+      <id>deploymentRepo</id>
+      <username>repouser</username>
+      <password>repopwd</password>
+    </server>
+    -->
+  </servers>
+
+  <!-- 配置文件 -->
+  <profiles>
+    <profile>
+      <id>aliyun</id>
+      <repositories>
+        <repository>
+          <id>aliyun-maven</id>
+          <name>阿里云Maven仓库</name>
+          <url>https://maven.aliyun.com/repository/public</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>aliyun-spring</id>
+          <name>阿里云Spring仓库</name>
+          <url>https://maven.aliyun.com/repository/spring</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>aliyun-plugin</id>
+          <name>阿里云插件仓库</name>
+          <url>https://maven.aliyun.com/repository/public</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+
+  <!-- 激活的配置文件 -->
+  <activeProfiles>
+    <activeProfile>aliyun</activeProfile>
+  </activeProfiles>
+
+</settings>
