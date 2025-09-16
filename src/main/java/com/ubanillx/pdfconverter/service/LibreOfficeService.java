@@ -81,7 +81,7 @@ public class LibreOfficeService {
     }
     
     private void initializeLibreOffice() throws Exception {
-        logger.info("Initializing LibreOffice UNO API...");
+        logger.info("Initializing LibreOffice UNO API from Maven dependencies...");
         
         try {
             // 检测运行环境并设置相应的LibreOffice路径
@@ -120,7 +120,7 @@ public class LibreOfficeService {
             logger.info("Desktop instance created, querying interface...");
             
             xLoader = UnoRuntime.queryInterface(XComponentLoader.class, desktop);
-            logger.info("LibreOffice UNO API initialized successfully");
+            logger.info("LibreOffice UNO API initialized successfully from Maven dependencies");
             
         } catch (Exception e) {
             logger.error("Failed to initialize LibreOffice UNO API: {}", e.getMessage(), e);

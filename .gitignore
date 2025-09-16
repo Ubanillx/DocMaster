@@ -161,10 +161,6 @@ downloaded_*.tmp
 
 # Spring Boot
 spring-boot-*.log
-application-*.properties
-!application.properties
-!application-dev.properties
-!application-docker.properties
 
 # LibreOffice临时文件
 *.lock

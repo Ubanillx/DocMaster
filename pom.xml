@@ -28,7 +28,6 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <libreoffice.java.path>/Applications/LibreOffice.app/Contents/Resources/java</libreoffice.java.path>
     </properties>
     <dependencies>
         <dependency>
@@ -44,53 +43,11 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
         
-        <!-- LibreOffice UNO API - Using system installation -->
+        <!-- LibreOffice UNO API - Using Maven repository -->
         <dependency>
             <groupId>org.libreoffice</groupId>
-            <artifactId>unoloader</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/unoloader.jar</systemPath>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.libreoffice</groupId>
-            <artifactId>juh</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/juh.jar</systemPath>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.libreoffice</groupId>
-            <artifactId>jurt</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/jurt.jar</systemPath>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.libreoffice</groupId>
-            <artifactId>ridl</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/ridl.jar</systemPath>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.libreoffice</groupId>
-            <artifactId>unoil</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/unoil.jar</systemPath>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.libreoffice</groupId>
-            <artifactId>java_uno</artifactId>
-            <version>7.6.0</version>
-            <scope>system</scope>
-            <systemPath>${libreoffice.java.path}/java_uno.jar</systemPath>
+            <artifactId>libreoffice</artifactId>
+            <version>7.5.4</version>
         </dependency>
         
         <!-- File handling -->
