@@ -27,4 +27,4 @@ echo "✅ LibreOffice Docker 容器正在运行"
 
 # 启动 Spring Boot 应用
 echo "🏃 启动 Spring Boot 应用..."
-./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
