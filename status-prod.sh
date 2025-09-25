@@ -41,18 +41,18 @@ echo ""
 
 # 检查端口占用
 echo "🌐 端口状态:"
-if netstat -tlnp 2>/dev/null | grep -q ":8080 "; then
-    echo "✅ 端口 8080 已被占用"
-    netstat -tlnp 2>/dev/null | grep ":8080 "
+if netstat -tlnp 2>/dev/null | grep -q ":9999 "; then
+    echo "✅ 端口 9999 已被占用"
+    netstat -tlnp 2>/dev/null | grep ":9999 "
 else
-    echo "❌ 端口 8080 未被占用"
+    echo "❌ 端口 9999 未被占用"
 fi
 
 echo ""
 
 # 显示访问信息
 echo "🔗 访问信息:"
-echo "   - 应用地址: http://121.229.205.96:8080"
+echo "   - 应用地址: http://121.229.205.96:9999"
 echo "   - 日志文件: $LOG_FILE"
 
 if [ -f "$LOG_FILE" ]; then

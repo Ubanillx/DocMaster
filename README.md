@@ -84,7 +84,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
 ### 5. 访问Web界面
-打开浏览器访问: http://localhost:8080
+打开浏览器访问: http://localhost:9999
 
 ## 环境变量配置
 
@@ -277,7 +277,7 @@ docker-compose -f docker-compose.libreoffice.yml restart
     "success": true,
     "message": "转换成功",
     "originalUrl": "https://example.com/document.pdf",
-    "convertedUrl": "http://localhost:8080/files/20241201_143022_a1b2c3d4.docx",
+    "convertedUrl": "http://localhost:9999/files/20241201_143022_a1b2c3d4.docx",
     "originalFormat": "pdf",
     "convertedFormat": "docx",
     "fileSize": 1024000
@@ -324,7 +324,7 @@ docker-compose -f docker-compose.libreoffice.yml restart
 ### 开发环境配置 (`application-dev.properties`)
 ```properties
 # 服务器端口
-server.port=8080
+server.port=9999
 
 # 文件上传大小限制
 spring.servlet.multipart.max-file-size=100MB
@@ -334,7 +334,7 @@ spring.servlet.multipart.max-request-size=100MB
 app.storage.directory=./uploads
 
 # 基础URL（用于生成下载链接）
-app.base.url=http://localhost:8080
+app.base.url=http://localhost:9999
 
 # Docker LibreOffice配置
 app.libreoffice.docker.enabled=true
@@ -350,7 +350,7 @@ logging.level.com.sun.star=WARN
 ### 生产环境配置 (`application-prod.properties`)
 ```properties
 # 服务器端口
-server.port=8080
+server.port=9999
 
 # 文件上传大小限制
 spring.servlet.multipart.max-file-size=100MB
@@ -360,7 +360,7 @@ spring.servlet.multipart.max-request-size=100MB
 app.storage.directory=./uploads
 
 # 基础URL（用于生成下载链接）
-app.base.url=http://localhost:8080
+app.base.url=http://localhost:9999
 
 # Docker LibreOffice配置
 app.libreoffice.docker.enabled=true
@@ -457,7 +457,7 @@ services:
 #### 文档格式转换示例
 ```bash
 # PDF转Word文档
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.pdf",
@@ -465,7 +465,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # Word文档转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.docx",
@@ -473,7 +473,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # DOC转DOCX
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.doc",
@@ -481,7 +481,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # ODT转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.odt",
@@ -489,7 +489,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # RTF转Word
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.rtf",
@@ -497,7 +497,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # 纯文本转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.txt",
@@ -505,7 +505,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # HTML转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/document.html",
@@ -516,7 +516,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
 #### 表格格式转换示例
 ```bash
 # Excel转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/spreadsheet.xlsx",
@@ -524,7 +524,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # XLS转XLSX
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/spreadsheet.xls",
@@ -532,7 +532,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # ODS转Excel
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/spreadsheet.ods",
@@ -543,7 +543,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
 #### 演示文稿格式转换示例
 ```bash
 # PowerPoint转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/presentation.pptx",
@@ -551,7 +551,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # PPT转PPTX
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/presentation.ppt",
@@ -559,7 +559,7 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
   }'
 
 # ODP转PowerPoint
-curl -X POST http://localhost:8080/api/conversion/convert-url \
+curl -X POST http://localhost:9999/api/conversion/convert-url \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://example.com/presentation.odp",
@@ -572,37 +572,37 @@ curl -X POST http://localhost:8080/api/conversion/convert-url \
 #### 文档格式上传转换示例
 ```bash
 # 上传PDF转Word
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.pdf" \
   -F "targetFormat=docx"
 
 # 上传Word转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.docx" \
   -F "targetFormat=pdf"
 
 # 上传DOC转DOCX
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.doc" \
   -F "targetFormat=docx"
 
 # 上传ODT转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.odt" \
   -F "targetFormat=pdf"
 
 # 上传RTF转Word
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.rtf" \
   -F "targetFormat=docx"
 
 # 上传纯文本转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.txt" \
   -F "targetFormat=pdf"
 
 # 上传HTML转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/document.html" \
   -F "targetFormat=pdf"
 ```
@@ -610,17 +610,17 @@ curl -X POST http://localhost:8080/api/conversion/convert-upload \
 #### 表格格式上传转换示例
 ```bash
 # 上传Excel转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/spreadsheet.xlsx" \
   -F "targetFormat=pdf"
 
 # 上传XLS转XLSX
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/spreadsheet.xls" \
   -F "targetFormat=xlsx"
 
 # 上传ODS转Excel
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/spreadsheet.ods" \
   -F "targetFormat=xlsx"
 ```
@@ -628,17 +628,17 @@ curl -X POST http://localhost:8080/api/conversion/convert-upload \
 #### 演示文稿格式上传转换示例
 ```bash
 # 上传PowerPoint转PDF
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/presentation.pptx" \
   -F "targetFormat=pdf"
 
 # 上传PPT转PPTX
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/presentation.ppt" \
   -F "targetFormat=pptx"
 
 # 上传ODP转PowerPoint
-curl -X POST http://localhost:8080/api/conversion/convert-upload \
+curl -X POST http://localhost:9999/api/conversion/convert-upload \
   -F "file=@/path/to/presentation.odp" \
   -F "targetFormat=pptx"
 ```
@@ -798,7 +798,7 @@ src/main/resources/
    echo "Hello, World!" > test.txt
    
    # 测试转换
-   curl -X POST http://localhost:8080/api/conversion/convert-upload \
+   curl -X POST http://localhost:9999/api/conversion/convert-upload \
      -F "file=@test.txt" \
      -F "targetFormat=pdf"
    ```
@@ -809,14 +809,14 @@ src/main/resources/
    python3 -m http.server 9000 --directory . &
    
    # 测试URL转换
-   curl -X POST http://localhost:8080/api/conversion/convert-url \
+   curl -X POST http://localhost:9999/api/conversion/convert-url \
      -H "Content-Type: application/json" \
      -d '{"url":"http://localhost:9000/test.txt","targetFormat":"pdf"}'
    ```
 
 3. **健康检查**:
    ```bash
-   curl http://localhost:8080/api/conversion/health
+   curl http://localhost:9999/api/conversion/health
    ```
 
 ### 验证转换结果

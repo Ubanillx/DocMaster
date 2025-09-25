@@ -23,7 +23,7 @@ public class FileStorageService {
     @Value("${app.storage.directory:./uploads}")
     private String storageDirectory;
     
-    @Value("${app.base.url:http://localhost:8080}")
+    @Value("${app.base.url:http://localhost:9999}")
     private String baseUrl;
     
     public String storeFile(File file, String originalFileName) throws IOException {
